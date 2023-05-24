@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Главная страница</title>
+</head>
+<body>
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <p class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">Страница для просмотра сотрудников</p>
+        <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{% url 'roles' %}" class="nav-link">Должности</a></li>
+        <li class="nav-item"><a href="{% url 'tasks' %}" class="nav-link">Задачи</a></li>
+      </ul>
+
+</header>
+    <div style="display: flex; justify-content: center;">
+        <h1>Сотрудники ({{ employees.count }})</h1>
+        <a class="btn btn-outline-primary" style="margin:10px; " href="{% url 'create_emp' %}">Добавить</a>
+    </div>
+
+ {% if employees %}
+    {% for e in employees %}
+        <div class="col" id="{{ e.pk }}">
+      <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 fw-normal" style="color:green">{{ e.name }}</h4>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled mt-3 mb-4">
+          <li>Возраст: {{ e.age }}</li>
+          <li>Зарплата: {{ e.salary }} p.</li>
+          <li>Должность: {{ e.role }}</li>
+          <li><a class="btn btn-outline-danger mb-2" href="{% url 'delete_emp' e.pk %}">Удалить</a></li>
+          <li><a class="btn btn-outline-primary mb-2" href="{% url 'edit_emp' e.pk %}">Редактировать</a></li>
+        </ul>
+      </div>
+    </div>
+
+ {% endfor %}
+    {% else %}
+     <div style="display: flex; justify-content: center;">
+      <p>Сотрудников нету</p>
+     </div>
+{% endif %}
+ </div>
+</body>
+</html>

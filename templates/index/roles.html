@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Должности</title>
+</head>
+<body>
+    <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+  <p class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">Страница для просмотра должностей</p>
+        <ul class="nav nav-pills">
+        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Сотрудники</a></li>
+        <li class="nav-item"><a href="{% url 'tasks' %}" class="nav-link">Задачи</a></li>
+      </ul>
+
+</header>
+    <div style="display: flex; justify-content: center;">
+        <h1>Должности ({{ roles.count }})</h1>
+        <a class="btn btn-outline-primary" style="margin:10px; " href="{% url 'create_role' %}">Добавить</a>
+    </div>
+
+ {% if roles %}
+    {% for r in roles %}
+        <div class="col" id="{{ r.pk }}">
+      <div class="card mb-4 shadow-sm">
+      <div class="card-header">
+        <h4 class="my-0 fw-normal">{{ r.name }}</h4>
+      </div>
+      <div class="card-body">
+        <ul class="list-unstyled mt-3 mb-4">
+          <li><a class="btn btn-outline-danger mb-2" href="{% url 'delete_role' r.pk%}">Удалить</a></li>
+          <li><a class="btn btn-outline-primary mb-2" href="{% url 'edit_role' r.pk%}">Редактировать</a></li>
+        </ul>
+      </div>
+    </div>
+
+ {% endfor %}
+    {% else %}
+    <div style="display: flex; justify-content: center;">
+      <p>Должностей нету</p>
+     </div>
+{% endif %}
+ </div>
+</body>
+</html>
